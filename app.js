@@ -1,5 +1,6 @@
 const express = require("express");
 const fakeDb = require("./fakeDb.js");
+const ExpressError = require("./expressError.js");
 const middleware = require("./middleware.js");
 const morgan = require("morgan");
 

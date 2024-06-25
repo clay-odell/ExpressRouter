@@ -1,16 +1,13 @@
+const ExpressError = require("./expressError");
 
-const ExpressError = require('./expressError.js');
+function errorHandler(err, req, res, next) {
+  let status = err.status || 500;
+  let message = err.message || "Something went wrong";
 
-function errorHandler (err, reeq, res, next) {
-    let status = err.status || 500;
-    let message = err.message || "Something went wrong";
-
-    if(process.env.NODE_ENV !== 'test') {
-        console.err(err.stack);
-    }
-    return res.status(status).json({ error: {message, status}});
+  if (process.env.NODE_ENV !== "test") {
+    console.error(err.stack);
+  }
+  return res.status(status).json({ error: { message, status } });
 }
 
 module.exports = { errorHandler };
-
-

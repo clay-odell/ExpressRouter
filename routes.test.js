@@ -36,7 +36,8 @@ describe("GET /items/:invalidname", function () {
     test("Attempts to get a an invalid item name, returns a 404", async function () {
         const resp = await request(app).get("/items/notpickles");
         expect(resp.statusCode).toBe(404);
-        expect(resp.body).toEqual({error:"Item not found"});
+        expect(resp.body).toEqual({error: {message: "Item not found", status: 404}});
+
     });
 });
 
@@ -44,8 +45,17 @@ describe("POST /items", function () {
   test("Posts an item to list of items", async function () {
     const resp = await request(app)
       .post("/items")
+
       .send({ name: "apple", price: "$0.80" });
     expect(resp.statusCode).toBe(201);
     expect(resp.body).toEqual({ added: { name: "apple", price: "$0.80" } });
   });
+});
+
+describe("PATCH /items/:name", function() {
+    test("It should update an item's name and/or price", async function() {
+        const resp = await request(app).patch("/items/pickles").send({ name: "newPickles", price: "$2.45"});
+        expect(resp.statusCode).toBe(200);
+        expect(resp.body).toEqual({updated: {name: "newPickles", price: "$2.45"}});
+    });
 });
