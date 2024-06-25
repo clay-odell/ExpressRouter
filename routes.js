@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const fakeDb = require("./fakeDb");
+
 
 router.get("/", (req, res) => {
   return res.json({ items: items });

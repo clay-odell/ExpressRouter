@@ -32,6 +32,14 @@ describe("GET /items/:name", function () {
     });
 });
 
+describe("GET /items/:invalidname", function () {
+    test("Attempts to get a an invalid item name, returns a 404", async function () {
+        const resp = await request(app).get("/items/notpickles");
+        expect(resp.statusCode).toBe(404);
+        expect(resp.body).toEqual({error:"Item not found"});
+    });
+});
+
 describe("POST /items", function () {
   test("Posts an item to list of items", async function () {
     const resp = await request(app)
